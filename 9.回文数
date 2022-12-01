@@ -1,0 +1,32 @@
+bool isPalindrome(int x){ //12321 //121
+    int arr[32] = {0};
+    int ret = 0;
+    int num = x;
+    int n = 0;
+    if(num<0)
+    {
+        return false;
+    }
+    else
+    {
+        while(num)
+        {
+            ret = num%10;
+            arr[n++] = ret;
+            num/=10;
+        }
+    }
+    int i = 0;
+    int j =n-1;
+    for(i,j;i<n,j>=0;i++,j--)
+    {
+        if(arr[i] ==arr[j])
+        {
+            continue;
+        }
+        else{
+            return false;
+        }
+    }
+    return true;
+}
