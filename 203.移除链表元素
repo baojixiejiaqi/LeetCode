@@ -1,0 +1,46 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+
+
+struct ListNode* removeElements(struct ListNode* head, int val)
+{
+    if (head == NULL)
+    {
+        return NULL;
+    }
+    struct ListNode * newhead = NULL;
+    struct ListNode * tail = NULL;
+    struct ListNode * cur  = head;
+    while(cur)
+    {
+        if(cur ->val == val)//如果相等
+        {
+            struct ListNode* next = cur->next;//创建一个临时节点存储下一个节点的地址
+            free(cur);//释放目前重复的节点的地址
+            cur=next;//将cur指向下一个
+        }
+        else//如果不想等
+        {
+            if(tail ==NULL)//尾指针已经到最后面
+            {
+                newhead=tail = cur ;//就将地址赋予新的头节点
+            }
+            else
+            {
+                tail->next = cur;//全称是尾指针为主动，cur为被动，tail过一个不是目标节点就将节点的地址赋予进去
+                tail = tail->next;//尾指针往下走一位
+            }
+            cur = cur->next;
+        }
+    }
+    if(tail)//将最后一位的地址置为空
+    {
+        tail->next = NULL;
+    }
+    return newhead;
+}
