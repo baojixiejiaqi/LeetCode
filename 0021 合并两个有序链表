@@ -79,6 +79,7 @@ struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2)
         {
             tail->next = list2;//就让list2的指针指向list2的地址
             list2 = list2->next;//list2往后走一个
+            tail = tail->next;//tail往后走一个
         }
     }
     if(list1)//如果list1不为空，那么说明list2是走到了空，所以让list1挪到后面
