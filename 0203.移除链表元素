@@ -44,3 +44,36 @@ struct ListNode* removeElements(struct ListNode* head, int val)
     }
     return newhead;
 }
+
+
+
+
+struct ListNode* removeElements(struct ListNode* head, int val)
+{
+    //带哨兵位的头节点 不存储有效数据
+    struct ListNode*cur = head;//临时变量
+    struct ListNode*guard,*tail;//guard 哨兵位头结点 tail 尾指针
+    guard = tail = (struct ListNode*)malloc(sizeof(struct ListNode));//给哨兵位头结点开辟空间，创造节点
+    guard->next = NULL;//next先置为空
+    while(cur)//没到尾就继续循环
+    {
+        if(cur->val !=val)//如果不相等
+        {
+            tail->next = cur;//第一次将第一个节点的地址赋予cur，使cur进入链表 后面依次进入后面的数字
+            tail = tail->next;//尾指针指向下一个
+
+            cur= cur->next;//cur指向下一个
+        }
+        else
+        {
+            struct ListNode* next = cur->next;//相等了就创建一个临时变量存储相等数字后面数字的地址
+            free(cur);//释放目前节点 
+            cur=next;//然后cur也往后放
+        }
+    }
+    tail->next = NULL;//使最后一个数字的后面置为空
+    struct ListNode *newhead = guard->next;//创建一个新头 哨兵位next 就是链表的起始地址
+    free(guard);//开辟完后要释放
+    return newhead;//返回新的头结点
+
+}
