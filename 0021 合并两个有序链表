@@ -1,0 +1,95 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+
+/**
+struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2)
+{
+    //不带哨兵位的头结点
+    if(list1 ==NULL )//如果list1为空就返回list2的值
+    {
+        return list2;
+    }
+    if(list2 ==NULL)//同理，如果list2为空就返回list1的值
+    {
+        return list1;
+    }
+    struct ListNode* head,*tail;//创建头，尾节点
+    head = tail = NULL;//先置空
+    while(list1 && list2)//两个链表如果同时为空才跳出循环，否则继续执行
+    {
+        if(list1->val <list2->val)//list1的值比list2的值小
+        {
+            if(tail == NULL)//如果tail为空，将list1的起始地址赋予进去，只赋予一次，用来判断两个链表哪一个开始位置小
+            {
+                head = tail =list1;//将地址赋予进去
+            }
+            else//否则
+            {
+                tail->next =list1; //下一个list1的地址赋予tail的指针
+                tail=tail->next;//tail往下走一个
+            }
+            list1=list1->next;//判断完一个就往下走一个
+        }
+        else//list1的值比list2的值大
+        {
+            if(tail ==NULL)//如果tail为空，将list2的起始地址赋予进去，只赋予一次，用来判断两个链表哪一个开始位置小
+            {
+                head =tail = list2;//将地址赋予进去
+            }
+            else
+            {
+                tail->next =list2;//下一个list2的地址赋予tail的指针
+                tail=tail->next;//tail指向下一个
+            }
+            list2 = list2->next;//list2往下走一个
+        }   
+    }
+    if(list1)//如果list1不为空，那么说明list2是走到了空，所以让list1挪到后面
+    {
+        tail->next = list1;
+    }
+    if(list2)//如果list2不为空，那么说明list1是走到了空，所以让list2挪到后面
+    {
+        tail ->next = list2;
+    }
+    return head;
+}
+*/
+
+struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2)
+{
+    //带哨兵位的头结点
+    struct ListNode* guard,*tail;
+    guard =tail = (struct ListNode*)malloc(sizeof(struct ListNode));//为哨兵位头结点开辟空间
+    guard->next =NULL;//指针置空
+    while(list1 &&list2)//如果list1和list2同时不为空就执行
+    {
+        if(list1->val <list2->val)//如果list1的值小于list2
+        {
+            tail->next = list1;//就让tail的指针指向list1的地址
+            list1 = list1->next;//list1往后走一个
+            tail = tail->next;//tail也往后走一个
+        }
+        else//反之
+        {
+            tail->next = list2;//就让list2的指针指向list2的地址
+            list2 = list2->next;//list2往后走一个
+        }
+    }
+    if(list1)//如果list1不为空，那么说明list2是走到了空，所以让list1挪到后面
+    {
+        tail->next = list1;
+    }
+    if(list2)//如果list2不为空，那么说明list1是走到了空，所以让list2挪到后面
+    {
+        tail ->next =list2;
+    }
+    struct ListNode* head =guard->next;//创建一个临时节点存储头结点，以便于开辟出来的节点用完释放回去
+    free(guard);//释放guard哨兵位节点
+    return head;//返回
+}
