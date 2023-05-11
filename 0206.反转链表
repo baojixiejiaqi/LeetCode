@@ -1,0 +1,29 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+
+
+struct ListNode* reverseList(struct ListNode* head)
+{
+    if(head ==NULL)//如果为空链表就返回
+    {
+        return NULL;
+    }
+    struct ListNode * n1,*n2,*n3;//创立三个节点
+    n1 = NULL;//n1置为空
+    n2 = head;//n2指向头结点
+    n3 = n2->next;//n3指向下一个节点
+    while(n2)
+    {
+        n2->next = n1;//先让n1 n2反转一下
+        n1 = n2;//n1往后挪一位
+        n2 = n3;//n2往后挪一位
+        if(n3)//n3如果不为空
+            n3 = n3->next;//n3就往后挪一位，如果为空，链表执行到n2 = n3就退出循环
+    }
+    return n1;
+}
