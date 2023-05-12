@@ -1,0 +1,63 @@
+/**
+ * Definition for a Node.
+ * struct Node {
+ *     int val;
+ *     struct Node *next;
+ *     struct Node *random;
+ * };
+ */
+
+struct Node* copyRandomList(struct Node* head) 
+{
+	//拷贝节点链接在后面
+    struct Node* cur = head;
+    while(cur)
+    {
+        struct Node* next =cur->next;//保存原链表的下一个节点
+        struct Node* copy = (struct Node*)malloc(sizeof(struct Node));//开辟拷贝节点地址空间
+        copy->val = cur->val;//将值赋进去
+        
+        //插入链接
+        cur->next = copy;
+        copy->next = next;
+
+        cur=next;
+    }
+    //改变random的值，使原链表random随机指向的值拷贝进去
+    cur = head;
+    while(cur)
+    {
+        struct Node* copy = cur->next;//copy节点重新开始
+        if(cur->random ==NULL)//如果里面值为空 那就置为空
+        {
+            copy->random =NULL;
+        }
+        else//否则 值就为
+        {
+            copy->random = cur->random->next;//copy->random 在目标拷贝函数的后面
+        }
+        cur = cur->next->next;//往下走两个，到下一个节点
+    }
+    //解下来 恢复原链表，在将random的值做一个单链表
+    cur = head;
+    struct Node *copyhead = NULL,*copytail = NULL;
+    while(cur)
+    {
+        struct Node* copy = cur->next;//copy为拷贝的数
+        struct Node* next = copy->next;//next为下一个不同的数
+
+        cur->next = next;//原链表的数跳到下一个不同的数
+        //尾插
+        if(copytail ==NULL)
+        {
+            copyhead = copytail = copy;//都为头
+        }
+        else
+        {
+            copytail->next = copy;//让拷贝的数复制到新的链表的尾指针的next
+            copytail = copytail ->next;//往下走一个
+        }
+        cur = next;//cur往下走一个
+    }
+    return copyhead;
+}
