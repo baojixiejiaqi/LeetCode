@@ -1,0 +1,27 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+struct ListNode *detectCycle(struct ListNode *head) 
+{
+     struct ListNode *slow = head,*fast = head;//快慢指针
+     while(fast && fast->next)//判断为空有环和无环的条件
+     {
+         slow = slow->next;
+         fast = fast->next->next;//快的走两步，慢的走一步
+         if(slow == fast)//如果相等
+         {
+             struct ListNode *meet = slow;//创建相遇的地址的节点
+             while(head != meet)//头节点和相遇的节点没碰上
+             {
+                 meet = meet->next;//都往下走
+                 head = head->next;
+             } 
+             return meet;//碰上了就返回
+         }
+     }
+     return NULL;//否则无
+}
