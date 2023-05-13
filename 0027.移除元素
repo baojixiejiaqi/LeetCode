@@ -1,12 +1,13 @@
 int removeElement(int* nums, int numsSize, int val)
 {
-    int k = 0;
-    for(int i = 0; i<numsSize;i++)
+    int right = 0,left = 0;//左右指针，右指针判断是否相等
+    while(right<numsSize)//左指针储存除val以外的所有元素
     {
-        if(val != nums[i])
+        if(nums[right] != val)
         {
-            nums[k++] = nums[i];
+            nums[left++] = nums[right];
         }
+        right++;
     }
-    return k;
+    return left;
 }
