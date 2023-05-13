@@ -1,0 +1,21 @@
+void merge(int* nums1, int nums1Size, int m, int* nums2, int nums2Size, int n)
+{
+    int j = m + n - 1;//整个数组的大小
+    int i1 = m - 1;//数组一的大小
+    int i2 = n - 1;//数组二的大小
+    while(i1 >=0 && i2 >=0)//思路：用两个数组最后面的最大的数字进行比较，大的往最后面放，然后继续比较
+    {
+        if(nums1[i1] >nums2[i2])
+        {
+            nums1[j--] = nums1[i1--];
+        }
+        else
+        {
+            nums1[j--] = nums2[i2--];
+        }
+    }
+    while(i2 >=0)//用来判断如果数组一为空，将数组二的值赋予进去
+    {
+        nums1[j--] = nums2[i2--];
+    }
+}
