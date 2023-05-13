@@ -1,11 +1,16 @@
-int removeDuplicates(int* nums, int numsSize){
-    int different= 0;
-    for(int i = 0; i < numsSize-1; i++ )
+int removeDuplicates(int* nums, int numsSize)
+{
+    int left = 0,right = 0;
+    while(right <numsSize)
     {
-        if(nums[i]!=nums[i+1])
+        if(nums[left] == nums[right])//数组里的元素如果相等就让right往下走，知道两个指针不相等的时候
+        {                            //把右边指针内容覆盖到左边指针，形成删除
+            right++;
+        }
+        else
         {
-            nums[++different] = nums[i+1];
+            nums[++left] = nums[right++];
         }
     }
-    return different+1;
+    return left + 1;
 }
