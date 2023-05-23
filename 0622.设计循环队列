@@ -1,0 +1,96 @@
+typedef struct //利用数组来判断
+{              //思路：假溢出
+                //多一个容量去判断队列是非满了
+    int *a;
+    int front;//列头
+    int rear;//列尾
+    int k;
+} MyCircularQueue;
+
+
+MyCircularQueue* myCircularQueueCreate(int k) 
+{
+    MyCircularQueue* obj = (MyCircularQueue *)malloc(sizeof(MyCircularQueue));//开辟结构体空间
+    obj->a = (int *)malloc (sizeof(int)*(k+1));//开辟数组空间，顺便额外开一个用来判断是否列满
+    obj->front = obj->rear = 0;
+    obj->k = k;
+    return obj;
+}
+
+bool myCircularQueueIsEmpty(MyCircularQueue* obj) 
+{
+    assert(obj);
+    return obj->rear == obj->front;//如果两个相等就为空
+}
+
+bool myCircularQueueIsFull(MyCircularQueue* obj) 
+{
+    assert(obj);
+    return ((obj->rear +1)%(obj->k+1)) == obj->front;
+    //如果列满，+1到空然后 模等 （k+1）整个数组 能模开 就余0 返回开头来判断
+}
+
+bool myCircularQueueEnQueue(MyCircularQueue* obj, int value) //入
+{
+    assert(obj);
+    if(myCircularQueueIsFull(obj))//判断满
+        return false;
+    obj->a[obj->rear++] = value;//对应数组的角标元素存储完 后置++
+    obj->rear %= obj->k+1;//这句话与下面那句判断同理  判断是否到尾
+    //if(obj->rear + 1 == obj->k+1)
+    //    obj->rear = 0;
+    return true;
+}
+
+bool myCircularQueueDeQueue(MyCircularQueue* obj)//出
+{
+    assert(obj);
+    if(myCircularQueueIsEmpty(obj))//判断空
+        return false;
+    obj->front++;//后置++
+    obj->front %=obj->k+1;//判断是否到尾
+    return true;
+}
+
+int myCircularQueueFront(MyCircularQueue* obj) //列头
+{
+    assert(obj);
+    if(myCircularQueueIsEmpty(obj))//判空
+        return -1;
+    return obj->a[obj->front];//返回列头
+}
+
+int myCircularQueueRear(MyCircularQueue* obj) //列尾
+{
+    assert(obj);
+    if(myCircularQueueIsEmpty(obj))//判空
+        return -1;
+    return obj->a[((obj->rear+obj->k )%(obj->k+1))];
+    //列尾有可能在最前面也可能在最后 用来判断在哪去返回
+}
+
+
+
+void myCircularQueueFree(MyCircularQueue* obj) 
+{
+    free(obj->a);//先释放obj里面的数组a
+    free(obj);//再释放obj
+}
+
+/**
+ * Your MyCircularQueue struct will be instantiated and called as such:
+ * MyCircularQueue* obj = myCircularQueueCreate(k);
+ * bool param_1 = myCircularQueueEnQueue(obj, value);
+ 
+ * bool param_2 = myCircularQueueDeQueue(obj);
+ 
+ * int param_3 = myCircularQueueFront(obj);
+ 
+ * int param_4 = myCircularQueueRear(obj);
+ 
+ * bool param_5 = myCircularQueueIsEmpty(obj);
+ 
+ * bool param_6 = myCircularQueueIsFull(obj);
+ 
+ * myCircularQueueFree(obj);
+*/
