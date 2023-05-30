@@ -1,0 +1,27 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+//根结点和左子树进行比较 根结点与右结点进行比较  且结点不能为空 否则空节点的val就出问题了
+//一个一个比较 遍历到空节点 就返回true
+
+bool isUnivalTree(struct TreeNode* root)
+{
+    if(root == NULL)
+    {
+        return true;
+    }
+    if(root->left && root->left->val != root->val)
+    {
+        return false;
+    }
+    if(root->right && root->right->val != root->val)
+    {
+        return false;
+    }
+    return isUnivalTree(root->left) && isUnivalTree(root->right);
+}
