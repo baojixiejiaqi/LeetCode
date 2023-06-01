@@ -1,0 +1,30 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+bool _isSymmetric(struct TreeNode* root1,struct TreeNode* root2)
+{
+    if(root1 == NULL && root2 == NULL)//两个为空 ，调用完了 ，则为true
+    {
+        return true;
+    }
+    if(root1 == NULL || root2 == NULL)//一个为空 另一个不为空 说明不想等 则为false
+    {
+        return false;
+    }
+    if(root1->val != root2->val)//值不相等 也不行
+    {
+        return false;
+    }
+    //在让左树left 和 右树right 对比 反之也要对比 相同才能返回
+    return _isSymmetric(root1->left,root2->right) &&
+           _isSymmetric(root1->right,root2->left); 
+}
+bool isSymmetric(struct TreeNode* root)
+{
+    return _isSymmetric(root,root);//调用子树
+}
