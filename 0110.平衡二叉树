@@ -1,0 +1,32 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+int TreeHigh(struct TreeNode* root)//判断树的高度，找出左右子树高的为高度
+{
+    if(root == NULL)
+    {
+        return 0;
+    }
+    int TreeLeft = TreeHigh(root->left);
+    int TreeRight = TreeHigh(root->right);
+    return TreeLeft > TreeRight ? TreeLeft + 1 :TreeRight + 1;
+}
+bool isBalanced(struct TreeNode* root)
+//如果走到空就说明为真
+{
+    if(root == NULL)
+    {
+        return true;
+    }
+    else
+    {
+//abs绝对值函数，如果左右子树的高度差小于1 且左右子树存在 继续，不满足就为假
+        return ((abs(TreeHigh(root->left)-TreeHigh(root->right) )<=1) 
+        && isBalanced(root->left) && isBalanced(root->right));
+    }
+}
