@@ -1,0 +1,24 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+
+
+struct TreeNode* invertTree(struct TreeNode* root)
+{
+    //如果根为空就返回空
+    //不为空就将两个左右子树的地址储存在指针 再一交换即可
+    if(root == NULL)
+    {
+        return NULL;
+    }
+    struct TreeNode *left = invertTree(root ->left);;
+    struct TreeNode *right = invertTree(root -> right);;
+    root->right = left;
+    root->left = right;
+    return root; 
+}
