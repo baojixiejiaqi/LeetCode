@@ -1,0 +1,43 @@
+if (begin >= end)
+	{
+		return;
+	}
+	else
+	{
+        //三路划分法
+        //核心思想：跟key相等的，往后推
+        //比key小的甩到左边
+        //比key大的甩到右边
+        //跟key相等的就在中间
+		int mid = GetMid(a, begin, end);
+		Swap(&a[begin], &a[mid]);
+
+		int left = begin, right = end;
+		int key = a[left];
+        int cur = begin + 1;
+		while (cur <= right) 
+		{
+            //把小的换到左边,cur和left同时往后走
+			if(a[cur] < key)
+            {
+                Swap(&a[left],&a[cur]);
+                left++;
+                cur++;
+            }
+            //相等就不敢 让cur往后走
+            else if(a[cur] == key)
+            {
+                cur++;
+            }
+            //把大的放到右边，right 往前走，换过来的可能又比key大或者比key小
+            else //a[cur] > key
+            {
+                Swap(&a[cur],&a[right]);
+                right--;
+            }
+		}
+
+		// [begin,left-1] 比key小,[left,right] 跟key相等的,[right+1,end] 比key大
+		QuickSort(a, begin, left-1);
+		QuickSort(a, right+1, end);
+	}
