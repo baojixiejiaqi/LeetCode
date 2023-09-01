@@ -1,0 +1,33 @@
+class Solution {
+public:
+//判断是否是字母
+bool Isletter(char str)
+{
+    if(str >='a' &&str<='z')
+        return true;
+    if(str >='A' && str<='Z')
+    {
+        return true;
+    } 
+    return false;
+
+}
+
+string reverseOnlyLetters(string s) 
+{
+    //前后指针 是的话就交换 不是就 ++ --
+    size_t begin = 0; size_t end = s.size() - 1;
+    while(begin<end)
+    {
+        while(begin < end && !Isletter(s[begin]))
+            ++begin;
+        while(begin < end && !Isletter(s[end]))
+            --end;
+        swap(s[begin],s[end]);
+        begin++;
+        end--;
+    }
+    return s;
+}
+
+};
