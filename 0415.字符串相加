@@ -1,0 +1,35 @@
+//倒着加完 再翻转过来即可
+class Solution {
+public:
+    string addStrings(string num1, string num2) 
+    {
+        int end1 = num1.size() - 1;
+        int end2 = num2.size() - 1;
+        //开辟新串存储
+        string strnew;
+        //给大的那个串扩容一位 方便相加
+        strnew.reserve(num1.size() > num2.size() ? num1.size()+1 : num2.size()+ 1);
+        int next = 0;//进位
+        while(end1 >= 0 || end2 >=0) //并起来是结束条件 或是执行条件
+        {
+            int val1 = end1 >= 0 ? num1[end1] - '0' : 0;
+            int val2 = end2 >= 0 ? num2[end2] - '0' : 0;
+            //加和 和 进位 可能为一位数 一可能加和超过10
+            int sum = val1 + val2 +next;
+            //算出进位 再进行下一位
+            next = sum / 10;
+            sum = sum % 10;
+            //插入串里面
+            strnew += ('0' + sum);
+            --end1;
+            --end2;
+        }
+        //如果最后一次加 还超过 10 在后面插入溢出的1 翻转就是第一位
+        if(next == 1)
+        {
+            strnew += '1';
+        }
+        reverse(strnew.begin(),strnew.end());
+        return strnew;
+    }
+};
