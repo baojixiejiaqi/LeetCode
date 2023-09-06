@@ -1,0 +1,18 @@
+class Solution {
+public:
+    //先将整个字符串转换为小写
+    bool isPalindrome(string s) 
+    {
+        string str;
+        for(char ch:s)
+        {
+            if(isalnum(ch))
+            {
+                str += tolower(ch);
+            }
+        }
+        //再将字符串用rbegin ，rend 逆序判断是否相等
+        string str_reverse(str.rbegin(),str.rend());
+        return str == str_reverse;
+    }
+};
