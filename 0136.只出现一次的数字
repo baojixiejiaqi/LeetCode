@@ -1,0 +1,12 @@
+class Solution {
+public:
+//利用异或运算符遍历整个数组，重复的即为0，所以结果为单独的
+    int singleNumber(vector<int>& nums) {
+        int ret = 0;
+        for(auto ch :nums)
+        {
+            ret^=ch;
+        }
+        return ret;
+    }
+};
