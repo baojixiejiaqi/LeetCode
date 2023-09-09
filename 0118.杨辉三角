@@ -1,0 +1,27 @@
+class Solution {
+public:
+    vector<vector<int>> generate(int numRows) 
+    {
+        vector<vector<int>> vv;
+        //外层每一个结构都是 vectro<int>()
+        vv.resize(numRows,vector<int>());
+        for(size_t i = 0;i<vv.size();i++)
+        {
+            //先将每一层全赋为0,，再将第一列 和 最后一列 变为1
+            //剩下的加和即可
+            vv[i].resize(i+1,0);
+            vv[i][0] = vv[i][vv[i].size() - 1] = 1;
+        }
+        for(size_t i = 0; i<vv.size();i++)
+        {
+            for(size_t j = 0; j< vv[i].size();j++)
+            {
+                if(vv[i][j] == 0)
+                {
+                    vv[i][j] = vv[i-1][j] + vv[i-1][j-1];
+                }
+            }
+        }
+        return vv;
+    }
+};
