@@ -1,0 +1,37 @@
+class Solution 
+{
+public:
+    //第一次全遍历 将重复的数过滤 剩 两个不重复的数字的异或
+    //找到这两个数字的32位的最首先一位不同，通过这个位不同，将其分为两组即可
+    vector<int> singleNumber(vector<int>& nums) {
+    int tmp = 0;
+    for(auto num:nums)
+    {
+        tmp ^= num;
+    }
+    //tmp = a^b;
+    int i = 0;
+    while(i<32)
+    {
+        if(tmp>>i & 1)
+        {
+            break;
+        }
+        i++;
+    }
+    //再次遍历
+    int ret1 = 0,ret2 = 0;
+    for(auto num:nums)
+    {
+        if(num & 1 <<i ) //这个数字左移i位为1，为一组，否则为另一组
+        {
+            ret1 ^= num;
+        }
+        else
+        {
+            ret2 ^= num;
+        }
+    }
+    return {ret1,ret2};
+    }
+};
